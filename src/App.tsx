@@ -1,37 +1,35 @@
-import * as React from "react"
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import { ChakraProvider, Box, Text, Grid, GridItem } from '@chakra-ui/react'
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
+  <ChakraProvider>
     <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
+      <Grid
+        templateAreas={`"header" "main"`}
+        gridTemplateRows={'1fr 1fr'}
+        minH="100vh"
+        maxW="1170px"
+        gap={3}
+        m="auto"
+        color="blackAlpha.700"
+        fontWeight="bold"
+      >
+        <GridItem p="23" bg="orange.300" area={'header'}>
+          Header
+        </GridItem>
+        <GridItem p="3" bg="orange.300" area={'main'}>
+          <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+            <GridItem w="100%" h="10" bg="blue.500">
+              <Text>Edit</Text>
+              <Box />
+            </GridItem>
+            <GridItem w="100%" h="10" bg="blue.500">
+              <Text>Edit</Text>
+            </GridItem>
+            <GridItem w="100%" h="10" bg="blue.500">
+              <Text>Edit</Text>
+            </GridItem>
+          </Grid>
+        </GridItem>
       </Grid>
     </Box>
   </ChakraProvider>
