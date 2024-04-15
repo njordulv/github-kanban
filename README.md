@@ -1,59 +1,61 @@
+## GitHub Kanban Board
+
+### Description
+
+This project implements a Kanban board for viewing GitHub repository issues. It allows users to manage issues through a visual interface that categorizes issues into three columns based on their status: ToDo, In Progress, and Done. Users can drag and drop issues between columns to update their status and organize their workflow efficiently.
+
+### Features
+
+1. URL Input: Users can enter a GitHub repository URL to load issues.
+2. Dynamic Issue Loading: Utilizes the GitHub API to fetch issues for a specified repository.
+3. Kanban Columns: Issues are displayed in three columns:
+4. ToDo: Contains new issues.
+5. In Progress: Contains open issues that have an assignee.
+6. Done: Contains closed issues.
+7. Drag-and-Drop: Users can drag and drop issues between columns to update their status.
+8. Persistence: The state of the board (column and order of issues) is saved across browser sessions.
+9. Navigation Links: Users can access the GitHub profile of the repository owner and visit the repository directly from the app.
+
+### Technologies
+
+- Frontend library: React 18
+- State Management: Redux Toolkit
+- UI design system: Chakra UI
+- Testing: React Testing Library
+- Languages: TypeScript
+
+### Installation
+
+1. Clone the repository:
+
+git clone https://github.com/njordulv/github-kanban.git
+cd github-kanban
+
+2. Install dependencies:
+
+yarn install
+
+3. Start the application:
+
+yarn start
+
+4. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to access the app.
+
+### Usage
+
+To use the application, enter the URL of a GitHub repository at the top of the page and press "Load". The application will fetch and display the issues in the respective Kanban columns. Drag and drop issues to update their status and order.
+
+### Configuration
+
+No additional configuration is needed to run the application under normal circumstances. However, you may need to configure your GitHub API access token if you encounter rate limits.
+
+### Contributing
+
+Contributions are welcome! Please fork the repository and submit pull requests to the develop branch. For substantial changes, please open an issue first to discuss what you would like to change. Ensure to update tests as appropriate.
+
+### License
+
+This project is licensed under the [MIT License](LICENSE).
+
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br /> Open
-[http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br /> You will also see any lint errors
-in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br /> See the section
-about
-[running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br /> It correctly bundles
-React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br /> Your app is
-ready to be deployed!
-
-See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can
-`eject` at any time. This command will remove the single build dependency from
-your project.
-
-Instead, it will copy all the configuration files and the transitive
-dependencies (webpack, Babel, ESLint, etc) right into your project so you have
-full control over them. All of the commands except `eject` will still work, but
-they will point to the copied scripts so you can tweak them. At this point
-you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for
-small and middle deployments, and you shouldn’t feel obligated to use this
-feature. However we understand that this tool wouldn’t be useful if you couldn’t
-customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the
-[Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
