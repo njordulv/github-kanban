@@ -1,6 +1,6 @@
 import { ChakraProvider, Box, Text, Grid, GridItem } from '@chakra-ui/react'
-import Form from './components/Form'
-import styles from './styles/app.module.scss'
+import Form from 'components/Form'
+import styles from 'styles/app.module.scss'
 
 export const App = () => (
   <ChakraProvider>

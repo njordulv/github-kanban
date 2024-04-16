@@ -1,6 +1,6 @@
 import { Card, CardHeader, Heading, CardBody, Text, CardFooter, Flex } from '@chakra-ui/react'
-import { Issue } from '../types'
-import { timeSince } from '../utils/openedSince'
+import { Issue } from 'types'
+import { timeSince } from 'utils/openedSince'
 
 export default function CardIssue({ title, number, comments, user, created_at }: Issue) {
   return (

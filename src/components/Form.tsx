@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
-import { fetchRepository, fetchRepositoryIssues } from '../api/githubAPI'
-import { Repository, Issue } from '../types'
-import CardIssue from './CardIssue'
-import styles from '../styles/form.module.scss'
+import { fetchRepository, fetchRepositoryIssues } from 'api/githubAPI'
+import { Repository, Issue } from 'types'
+import CardIssue from 'components/CardIssue'
+import styles from 'styles/form.module.scss'
 
 export default function Form() {
   const [repository, setRepository] = useState<Repository | null>(null)
