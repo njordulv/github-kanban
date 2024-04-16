@@ -18,9 +18,9 @@ export const fetchRepository = async (repoPath: string) => {
   }
 }
 
-export const fetchRepositoryIssues = async (owner: string, repo: string) => {
+export const fetchRepositoryIssues = async (owner: string, repo: string, limit: number) => {
   try {
-    const response = await githubApi.get(`/repos/${owner}/${repo}/issues`)
+    const response = await githubApi.get(`/repos/${owner}/${repo}/issues?per_page=${limit}`)
     return response.data
   } catch (error) {
     console.error('Error fetching repository issues: ', error)

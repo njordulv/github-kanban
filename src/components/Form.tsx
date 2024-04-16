@@ -10,6 +10,8 @@ export default function Form() {
   const [issues, setIssues] = useState<Issue[]>([])
   const [inputVal, setInputVal] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [isDataLoaded, setIsDataLoaded] = useState(false)
+  const [hasMoreData, setHasMoreData] = useState(true)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(event.target.value)
@@ -30,10 +32,13 @@ export default function Form() {
       const repoPath = inputVal.replace(/^\/|\/$|https?:\/\/github\.com\//g, '')
       const repoData = await fetchRepository(repoPath)
       const { owner, repo } = extractRepoInfo(inputVal)
-      const issuesData = await fetchRepositoryIssues(owner, repo)
+      const limit = 4
+      const issuesData = await fetchRepositoryIssues(owner, repo, limit)
       setRepository(repoData)
       setIssues(issuesData)
       setErrorMessage('')
+      setIsDataLoaded(true)
+      setHasMoreData(issuesData.length === limit)
     } catch (error) {
       setErrorMessage('Failed to load GitHub data')
     }
@@ -62,6 +67,15 @@ export default function Form() {
     return { owner, repo }
   }
 
+  const loadMoreUsers = async () => {
+    const { owner, repo } = extractRepoInfo(inputVal)
+    const newLimit = issues.length + 2
+    const apiUsers = await fetchRepositoryIssues(owner, repo, newLimit)
+    setIssues(apiUsers)
+    setIsDataLoaded(true)
+    setHasMoreData(apiUsers.length > issues.length)
+  }
+
   return (
     <>
       <FormControl onSubmit={handleSubmit} className={styles.form}>
@@ -79,8 +93,13 @@ export default function Form() {
           {errorMessage && <FormHelperText className={styles.form__error}>{errorMessage}</FormHelperText>}
         </Flex>
       </FormControl>
-      <Flex flexDirection="column" gap={7} maxW={1170} mx="auto">
+      <Flex flexDirection="column" gap={7} maxW={1170} mx="auto" mt={7}>
         {issues && issues.map((issue: Issue) => <CardIssue key={issue.id} {...issue} />)}
+        {isDataLoaded && hasMoreData && (
+          <Button type="submit" colorScheme="gray" px={8} onClick={loadMoreUsers}>
+            Load more
+          </Button>
+        )}
       </Flex>
     </>
   )
