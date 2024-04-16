@@ -1,0 +1,44 @@
+.app {
+  background-color: #22272e;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.header {
+  border-bottom: 1px solid #444c56;
+}
+
+.content {
+  background-color: transparent;
+  color: #c5d1de;
+  margin: 1.75rem auto;
+  width: 100%;
+  padding: 0 1.75rem;
+  max-width: 1230px;
+  min-height: 100vh;
+
+  &__boxes {
+    gap: 1.75rem;
+  }
+
+  &__box {
+    border: 1px solid #444c56;
+    border-radius: 5px;
+    background-color: transparent;
+  }
+
+  &__heading {
+    background-color: #2d323b;
+    border-bottom: 1px solid #444c56;
+    border-radius: 5px 5px 0 0;
+    padding: 15px;
+    color: #c5d1de;
+  }
+
+  &__item {
+    border: 1px solid #444c56;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    text-align: left;
+  }
+}

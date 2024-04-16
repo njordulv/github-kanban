@@ -1,32 +1,33 @@
 import { ChakraProvider, Box, Text, Grid, GridItem } from '@chakra-ui/react'
+import Header from './components/Header'
+import styles from './styles/app.module.scss'
 
 export const App = () => (
   <ChakraProvider>
-    <Box textAlign="center" fontSize="xl">
-      <Grid
-        templateAreas={`"header" "main"`}
-        gridTemplateRows={'1fr 1fr'}
-        minH="100vh"
-        maxW="1170px"
-        gap={3}
-        m="auto"
-        color="blackAlpha.700"
-        fontWeight="bold"
-      >
-        <GridItem p="23" bg="orange.300" area={'header'}>
-          Header
-        </GridItem>
-        <GridItem p="3" bg="orange.300" area={'main'}>
-          <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-            <GridItem w="100%" h="10" bg="blue.500">
-              <Text>Edit</Text>
-              <Box />
+    <Box textAlign="center" fontSize="xl" className={styles.app}>
+      <GridItem p="7" bg="#1d2128" className={styles.header}>
+        <Header />
+      </GridItem>
+      <Grid className={styles.content}>
+        <GridItem rounded={5}>
+          <Grid templateColumns="repeat(3, 1fr)" className={styles.content__boxes}>
+            <GridItem className={styles.content__box}>
+              <Text className={styles.content__heading}>To Do</Text>
+              <Box className={styles.content__item}>
+                <Text>items</Text>
+              </Box>
             </GridItem>
-            <GridItem w="100%" h="10" bg="blue.500">
-              <Text>Edit</Text>
+            <GridItem className={styles.content__box}>
+              <Text className={styles.content__heading}>In Progress</Text>
+              <Box className={styles.content__item}>
+                <Text>items</Text>
+              </Box>
             </GridItem>
-            <GridItem w="100%" h="10" bg="blue.500">
-              <Text>Edit</Text>
+            <GridItem className={styles.content__box}>
+              <Text className={styles.content__heading}>Done</Text>
+              <Box className={styles.content__item}>
+                <Text>items</Text>
+              </Box>
             </GridItem>
           </Grid>
         </GridItem>
