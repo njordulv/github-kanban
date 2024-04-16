@@ -17,3 +17,13 @@ export const fetchRepository = async (repoPath: string) => {
     throw error
   }
 }
+
+export const fetchRepositoryIssues = async (owner: string, repo: string) => {
+  try {
+    const response = await githubApi.get(`/repos/${owner}/${repo}/issues`)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching repository issues: ', error)
+    throw error
+  }
+}

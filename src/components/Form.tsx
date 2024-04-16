@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react'
 import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
-import { fetchRepository } from '../api/githubAPI'
+import { fetchRepository, fetchRepositoryIssues } from '../api/githubAPI'
+import { Repository, Issue } from '../types'
+import CardIssue from './CardIssue'
 import styles from '../styles/form.module.scss'
 
-interface GithubRepository {
-  name: string
-  description: string
-}
-
 export default function Form() {
-  const [repository, setRepository] = useState<GithubRepository | null>(null)
+  const [repository, setRepository] = useState<Repository | null>(null)
+  const [issues, setIssues] = useState<Issue[]>([])
   const [inputVal, setInputVal] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -31,23 +29,23 @@ export default function Form() {
     try {
       const repoPath = inputVal.replace(/^\/|\/$|https?:\/\/github\.com\//g, '')
       const repoData = await fetchRepository(repoPath)
+      const { owner, repo } = extractRepoInfo(inputVal)
+      const issuesData = await fetchRepositoryIssues(owner, repo)
       setRepository(repoData)
+      setIssues(issuesData)
       setErrorMessage('')
     } catch (error) {
-      console.error('Failed to load GitHub data', error)
       setErrorMessage('Failed to load GitHub data')
     }
   }
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | null = null
-
     if (errorMessage) {
       timeout = setTimeout(() => {
         setErrorMessage('')
       }, 3000)
     }
-
     return () => {
       if (timeout) {
         clearTimeout(timeout)
@@ -55,27 +53,35 @@ export default function Form() {
     }
   }, [errorMessage])
 
-  return (
-    <FormControl onSubmit={handleSubmit} className={styles.form}>
-      <Flex as="form" gap={7} maxW={1170} mx="auto">
-        <Input
-          type="text"
-          variant="outline"
-          placeholder="Enter repo URL"
-          value={inputVal}
-          onChange={handleInputChange}
-        />
-        <Button type="submit" colorScheme="gray" px={8}>
-          Load issues
-        </Button>
-        {errorMessage && <FormHelperText className={styles.form__error}>{errorMessage}</FormHelperText>}
-      </Flex>
+  const extractRepoInfo = (url: string) => {
+    const match = url.match(/https?:\/\/github.com\/([^/]+)\/([^/]+)/)
+    if (!match) {
+      throw new Error('Invalid GitHub repository URL')
+    }
+    const [, owner, repo] = match
+    return { owner, repo }
+  }
 
-      {repository && (
-        <Flex gap={7} maxW={1170} mx="auto">
-          {repository.name} - {repository.description}
+  return (
+    <>
+      <FormControl onSubmit={handleSubmit} className={styles.form}>
+        <Flex as="form" gap={7} maxW={1170} mx="auto">
+          <Input
+            type="text"
+            variant="outline"
+            placeholder="Enter repo URL"
+            value={inputVal}
+            onChange={handleInputChange}
+          />
+          <Button type="submit" colorScheme="gray" px={8}>
+            Load issues
+          </Button>
+          {errorMessage && <FormHelperText className={styles.form__error}>{errorMessage}</FormHelperText>}
         </Flex>
-      )}
-    </FormControl>
+      </FormControl>
+      <Flex flexDirection="column" gap={7} maxW={1170} mx="auto">
+        {issues && issues.map((issue: Issue) => <CardIssue key={issue.id} {...issue} />)}
+      </Flex>
+    </>
   )
 }
