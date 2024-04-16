@@ -1,12 +1,12 @@
 import { ChakraProvider, Box, Text, Grid, GridItem } from '@chakra-ui/react'
-import Header from './components/Header'
+import Form from './components/Form'
 import styles from './styles/app.module.scss'
 
 export const App = () => (
   <ChakraProvider>
     <Box textAlign="center" fontSize="xl" className={styles.app}>
       <GridItem p="7" bg="#1d2128" className={styles.header}>
-        <Header />
+        <Form />
       </GridItem>
       <Grid className={styles.content}>
         <GridItem rounded={5}>
