@@ -69,7 +69,7 @@ export default function Form() {
 
   const loadMoreUsers = async () => {
     const { owner, repo } = extractRepoInfo(inputVal)
-    const newLimit = issues.length + 2
+    const newLimit = issues.length + 4
     const apiUsers = await fetchRepositoryIssues(owner, repo, newLimit)
     setIssues(apiUsers)
     setIsDataLoaded(true)
@@ -93,7 +93,7 @@ export default function Form() {
           {errorMessage && <FormHelperText className={styles.form__error}>{errorMessage}</FormHelperText>}
         </Flex>
       </FormControl>
-      <Flex flexDirection="column" gap={7} maxW={1170} mx="auto" mt={7}>
+      <Flex flexDirection="column" gap={7} maxW={1170} mx="auto">
         {issues && issues.map((issue: Issue) => <CardIssue key={issue.id} {...issue} />)}
         {isDataLoaded && hasMoreData && (
           <Button type="submit" colorScheme="gray" px={8} onClick={loadMoreUsers}>

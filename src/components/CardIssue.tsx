@@ -4,7 +4,7 @@ import { timeSince } from 'utils/openedSince'
 
 export default function CardIssue({ title, number, comments, user, created_at }: Issue) {
   return (
-    <Card textAlign="left" variant="outline" bg="#373e47" borderRadius="lg" gap={3} p={3}>
+    <Card textAlign="left" variant="outline" bg="#22272e" borderRadius="lg" gap={3} p={3}>
       <CardHeader p={0}>
         <Heading size="md">{title}</Heading>
       </CardHeader>
