@@ -4,6 +4,7 @@ import { RequestTypes } from 'types'
 import { fetchRepoIssues } from 'api/githubAPI'
 
 interface StateTypes {
+  inputVal: string
   issues: []
   isDataLoaded: boolean
   hasMoreData: boolean
@@ -12,6 +13,7 @@ interface StateTypes {
 }
 
 const initialState: StateTypes = {
+  inputVal: '',
   issues: [],
   isDataLoaded: false,
   hasMoreData: true,
@@ -34,6 +36,9 @@ const issuesSlice = createSlice({
   name: 'issues',
   initialState,
   reducers: {
+    setInputVal: (state, action: PayloadAction<string>) => {
+      state.inputVal = action.payload
+    },
     setErrorMessage: (state, action: PayloadAction<string>) => {
       state.errorMessage = action.payload
     }
@@ -44,10 +49,12 @@ const issuesSlice = createSlice({
         state.loading = true
       })
       .addCase(loadIssues.fulfilled, (state, action) => {
+        const oldLength = state.issues.length
         state.issues = action.payload
-        state.hasMoreData = action.payload.length === state.issues.length + 4
+        state.hasMoreData = action.payload.length > oldLength
         state.isDataLoaded = true
         state.loading = false
+        state.errorMessage = ''
       })
       .addCase(loadIssues.rejected, (state, action) => {
         state.loading = false
@@ -56,7 +63,8 @@ const issuesSlice = createSlice({
   }
 })
 
-export const { setErrorMessage } = issuesSlice.actions
+export const { setInputVal, setErrorMessage } = issuesSlice.actions
+export const selectInputVal = (state: RootState) => state.issues.inputVal
 export const selectIssues = (state: RootState) => state.issues.issues
 export const selectIsDataLoaded = (state: RootState) => state.issues.isDataLoaded
 export const selectHasMoreData = (state: RootState) => state.issues.hasMoreData

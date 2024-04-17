@@ -20,10 +20,11 @@ body {
   width: 100%;
   padding: 0 1.75rem;
   max-width: 1230px;
-  min-height: 100vh;
+  min-height: calc(100vh - 155px);
 
   &__boxes {
     gap: 1.75rem;
+    height: 100%;
   }
 
   &__box {
@@ -36,15 +37,18 @@ body {
     background-color: #2d323b;
     border-bottom: 1px solid #444c56;
     border-radius: 5px 5px 0 0;
-    padding: 15px;
+    padding: 8px;
+    font-size: 16px;
+    font-weight: 600;
     color: #c5d1de;
   }
 
-  &__item {
-    border: 1px solid #444c56;
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     border-radius: 5px;
     padding: 10px;
-    margin: 10px;
     text-align: left;
   }
 }

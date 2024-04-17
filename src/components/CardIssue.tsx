@@ -4,9 +4,11 @@ import { timeSince } from 'utils/openedSince'
 
 export default function CardIssue({ title, number, comments, user, created_at }: Issue) {
   return (
-    <Card textAlign="left" variant="outline" bg="#22272e" color="#c5d1de" borderRadius="lg" gap={3} p={3}>
+    <Card variant="outline" bg="#22272e" borderColor="#444c56" rounded="md" color="#717e8b" p={3} fontSize={13} gap={1}>
       <CardHeader p={0}>
-        <Heading size="md">{title}</Heading>
+        <Heading textColor="#c5d1de" fontSize={15}>
+          {title}
+        </Heading>
       </CardHeader>
       <CardBody p={0}>
         <Flex flexDirection="row" gap={2}>
@@ -15,8 +17,7 @@ export default function CardIssue({ title, number, comments, user, created_at }:
         </Flex>
       </CardBody>
       <CardFooter flexDirection="row" gap={2} p={0}>
-        <Text>{user.login}</Text>
-        <Text>Comments: {comments}</Text>
+        <Text>{user.login}</Text> | <Text>Comments: {comments}</Text>
       </CardFooter>
     </Card>
   )
