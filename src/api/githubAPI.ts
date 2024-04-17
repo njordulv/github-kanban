@@ -8,17 +8,7 @@ const githubApi = axios.create({
   }
 })
 
-export const fetchRepository = async (repoPath: string) => {
-  try {
-    const response = await githubApi.get(`/repos/${repoPath}`)
-    return response.data
-  } catch (error) {
-    console.error('Error fetching repository: ', error)
-    throw error
-  }
-}
-
-export const fetchRepositoryIssues = async (owner: string, repo: string, limit: number) => {
+export const fetchRepoIssues = async (owner: string, repo: string, limit: number) => {
   try {
     const response = await githubApi.get(`/repos/${owner}/${repo}/issues?per_page=${limit}`)
     return response.data

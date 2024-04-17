@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
-import { fetchRepository, fetchRepositoryIssues } from 'api/githubAPI'
-import { Repository, Issue } from 'types'
+import { FormControl, FormHelperText, Button, Flex, Input, VisuallyHidden } from '@chakra-ui/react'
+import { fetchRepoIssues } from 'api/githubAPI'
+import { Issue } from 'types'
 import CardIssue from 'components/CardIssue'
 import styles from 'styles/form.module.scss'
 
 export default function Form() {
-  const [repository, setRepository] = useState<Repository | null>(null)
   const [issues, setIssues] = useState<Issue[]>([])
   const [inputVal, setInputVal] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -29,38 +28,30 @@ export default function Form() {
     }
 
     try {
-      const repoPath = inputVal.replace(/^\/|\/$|https?:\/\/github\.com\//g, '')
-      const repoData = await fetchRepository(repoPath)
-      const { owner, repo } = extractRepoInfo(inputVal)
+      const repoInfo = extractRepoInfo(inputVal)
       const limit = 4
-      const issuesData = await fetchRepositoryIssues(owner, repo, limit)
-      setRepository(repoData)
+      const issuesData = await fetchRepoIssues(repoInfo.owner, repoInfo.repo, limit)
       setIssues(issuesData)
-      setErrorMessage('')
       setIsDataLoaded(true)
       setHasMoreData(issuesData.length === limit)
+      setErrorMessage('')
     } catch (error) {
       setErrorMessage('Failed to load GitHub data')
     }
   }
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout | null = null
-    if (errorMessage) {
-      timeout = setTimeout(() => {
+    let timeout = setTimeout(() => {
+      if (errorMessage) {
         setErrorMessage('')
-      }, 3000)
-    }
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout)
       }
-    }
+    }, 3000)
+    return () => clearTimeout(timeout)
   }, [errorMessage])
 
   const extractRepoInfo = (url: string) => {
     const match = url.match(/https?:\/\/github.com\/([^/]+)\/([^/]+)/)
-    if (!match) {
+    if (!match || match.length < 3) {
       throw new Error('Invalid GitHub repository URL')
     }
     const [, owner, repo] = match
@@ -68,12 +59,16 @@ export default function Form() {
   }
 
   const loadMoreUsers = async () => {
-    const { owner, repo } = extractRepoInfo(inputVal)
-    const newLimit = issues.length + 4
-    const apiUsers = await fetchRepositoryIssues(owner, repo, newLimit)
-    setIssues(apiUsers)
-    setIsDataLoaded(true)
-    setHasMoreData(apiUsers.length > issues.length)
+    try {
+      const { owner, repo } = extractRepoInfo(inputVal)
+      const newLimit = issues.length + 4
+      const apiUsers = await fetchRepoIssues(owner, repo, newLimit)
+      setIssues(apiUsers)
+      setIsDataLoaded(true)
+      setHasMoreData(apiUsers.length > issues.length)
+    } catch (error) {
+      setErrorMessage('Error loading more issues')
+    }
   }
 
   return (
@@ -95,6 +90,7 @@ export default function Form() {
       </FormControl>
       <Flex flexDirection="column" gap={7} maxW={1170} mx="auto">
         {issues && issues.map((issue: Issue) => <CardIssue key={issue.id} {...issue} />)}
+        <VisuallyHidden></VisuallyHidden>
         {isDataLoaded && hasMoreData && (
           <Button type="submit" colorScheme="gray" px={8} onClick={loadMoreUsers}>
             Load more
