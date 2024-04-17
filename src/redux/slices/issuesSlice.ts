@@ -1,29 +1,33 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
-import { RequestTypes } from 'types'
+import { RequestTypes, Issue } from 'types'
 import { fetchRepoIssues } from 'api/githubAPI'
 
 interface StateTypes {
   inputVal: string
-  issues: []
+  issues: Issue[]
   isDataLoaded: boolean
   hasMoreData: boolean
   loading: boolean
   errorMessage: string | null
+  owner: string
+  repo: string
 }
 
 const initialState: StateTypes = {
   inputVal: '',
-  issues: [],
+  issues: [] as Issue[],
   isDataLoaded: false,
   hasMoreData: true,
   loading: false,
-  errorMessage: ''
+  errorMessage: '',
+  owner: '',
+  repo: ''
 }
 
-export const loadIssues = createAsyncThunk(
+export const loadIssues = createAsyncThunk<Issue[], RequestTypes, { rejectValue: string }>(
   'issues/load',
-  async ({ owner, repo, limit }: RequestTypes, { rejectWithValue }) => {
+  async ({ owner, repo, limit = 5 }, { rejectWithValue }) => {
     try {
       return await fetchRepoIssues(owner, repo, limit)
     } catch (error) {
@@ -41,6 +45,12 @@ const issuesSlice = createSlice({
     },
     setErrorMessage: (state, action: PayloadAction<string>) => {
       state.errorMessage = action.payload
+    },
+    setOwner: (state, action: PayloadAction<string>) => {
+      state.owner = action.payload
+    },
+    setRepo: (state, action: PayloadAction<string>) => {
+      state.repo = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -63,12 +73,14 @@ const issuesSlice = createSlice({
   }
 })
 
-export const { setInputVal, setErrorMessage } = issuesSlice.actions
+export const { setInputVal, setErrorMessage, setOwner, setRepo } = issuesSlice.actions
 export const selectInputVal = (state: RootState) => state.issues.inputVal
 export const selectIssues = (state: RootState) => state.issues.issues
 export const selectIsDataLoaded = (state: RootState) => state.issues.isDataLoaded
 export const selectHasMoreData = (state: RootState) => state.issues.hasMoreData
 export const selectErrorMessage = (state: RootState) => state.issues.errorMessage
 export const selectLoading = (state: RootState) => state.issues.loading
+export const selectOwner = (state: RootState) => state.issues.owner
+export const selectRepo = (state: RootState) => state.issues.repo
 
 export default issuesSlice.reducer

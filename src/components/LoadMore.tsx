@@ -1,4 +1,4 @@
-import { Button, Text } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import { AppDispatch, useSelector, useDispatch } from '../redux/store'
 import { Issue } from 'types'
 import { RootState } from '../redux/store'
@@ -33,17 +33,12 @@ const LoadMore: React.FC<LoadMoreProps> = () => {
 
   return (
     <>
-      {isDataLoaded && hasMoreData && (
+      {isDataLoaded && (
         <Button colorScheme="gray" px={8} onClick={loadMoreIssues}>
           Load more
         </Button>
       )}
-      {!hasMoreData && (
-        <Text align="center" fontSize={14}>
-          No issues to load
-        </Text>
-      )}
-      {!issues.length && ''}
+      {!hasMoreData && !issues.length && ''}
     </>
   )
 }

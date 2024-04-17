@@ -6,8 +6,8 @@ import styles from 'styles/app.module.scss'
 
 export const App = () => (
   <AppProviders>
-    <Box textAlign="center" fontSize="xl" className={styles.app}>
-      <GridItem p="7" bg="#1d2128" className={styles.header}>
+    <Box textAlign="center" fontSize="xl" bg="#22272e" color="#c5d1de">
+      <GridItem p="7" pb={12} position="relative">
         <Form />
       </GridItem>
       <Grid className={styles.content}>
