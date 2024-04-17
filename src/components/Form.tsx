@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react'
-import { FormControl, FormHelperText, Button, Flex, Input, VisuallyHidden } from '@chakra-ui/react'
-import { fetchRepoIssues } from 'api/githubAPI'
+import { useState } from 'react'
+import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
 import { Issue } from 'types'
+import { RootState, AppDispatch } from '../redux/store'
+import { useSelector, useDispatch } from '../redux/store'
+import { loadIssues, setErrorMessage } from '../redux/slices/issuesSlice'
 import CardIssue from 'components/CardIssue'
 import styles from 'styles/form.module.scss'
 
 export default function Form() {
-  const [issues, setIssues] = useState<Issue[]>([])
+  const dispatch: AppDispatch = useDispatch()
   const [inputVal, setInputVal] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const [isDataLoaded, setIsDataLoaded] = useState(false)
-  const [hasMoreData, setHasMoreData] = useState(true)
+  const { issues, isDataLoaded, errorMessage, loading } = useSelector((state: RootState) => state.issues)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(event.target.value)
@@ -18,57 +18,34 @@ export default function Form() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLDivElement>) => {
     event.preventDefault()
-
     if (!inputVal.trim()) {
-      setErrorMessage('Field is empty')
-      setTimeout(() => {
-        setErrorMessage('')
-      }, 3000)
       return
     }
-
-    try {
-      const repoInfo = extractRepoInfo(inputVal)
-      const limit = 4
-      const issuesData = await fetchRepoIssues(repoInfo.owner, repoInfo.repo, limit)
-      setIssues(issuesData)
-      setIsDataLoaded(true)
-      setHasMoreData(issuesData.length === limit)
-      setErrorMessage('')
-    } catch (error) {
-      setErrorMessage('Failed to load GitHub data')
+    const repoInfo = extractRepoInfo(inputVal)
+    if (!repoInfo) {
+      return
     }
+    const { owner, repo } = repoInfo
+    dispatch(loadIssues({ owner, repo, limit: 4 }))
   }
-
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      if (errorMessage) {
-        setErrorMessage('')
-      }
-    }, 3000)
-    return () => clearTimeout(timeout)
-  }, [errorMessage])
 
   const extractRepoInfo = (url: string) => {
     const match = url.match(/https?:\/\/github.com\/([^/]+)\/([^/]+)/)
-    if (!match || match.length < 3) {
-      throw new Error('Invalid GitHub repository URL')
+    if (!match) {
+      dispatch(setErrorMessage('Invalid GitHub repository URL'))
+      return null
     }
     const [, owner, repo] = match
     return { owner, repo }
   }
 
-  const loadMoreUsers = async () => {
-    try {
-      const { owner, repo } = extractRepoInfo(inputVal)
-      const newLimit = issues.length + 4
-      const apiUsers = await fetchRepoIssues(owner, repo, newLimit)
-      setIssues(apiUsers)
-      setIsDataLoaded(true)
-      setHasMoreData(apiUsers.length > issues.length)
-    } catch (error) {
-      setErrorMessage('Error loading more issues')
+  const loadMoreIssues = () => {
+    const repoInfo = extractRepoInfo(inputVal)
+    if (!repoInfo) {
+      return
     }
+    const { owner, repo } = repoInfo
+    dispatch(loadIssues({ owner, repo, limit: issues.length + 4 }))
   }
 
   return (
@@ -82,17 +59,18 @@ export default function Form() {
             value={inputVal}
             onChange={handleInputChange}
           />
-          <Button type="submit" colorScheme="gray" px={8}>
+          <Button type="submit" colorScheme="gray" px={8} isLoading={loading}>
             Load issues
           </Button>
           {errorMessage && <FormHelperText className={styles.form__error}>{errorMessage}</FormHelperText>}
         </Flex>
       </FormControl>
       <Flex flexDirection="column" gap={7} maxW={1170} mx="auto">
-        {issues && issues.map((issue: Issue) => <CardIssue key={issue.id} {...issue} />)}
-        <VisuallyHidden></VisuallyHidden>
-        {isDataLoaded && hasMoreData && (
-          <Button type="submit" colorScheme="gray" px={8} onClick={loadMoreUsers}>
+        {issues.map((issue: Issue) => (
+          <CardIssue key={issue.id} {...issue} />
+        ))}
+        {isDataLoaded && (
+          <Button colorScheme="gray" px={8} onClick={loadMoreIssues}>
             Load more
           </Button>
         )}

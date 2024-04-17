@@ -15,3 +15,9 @@ export interface Issue {
   created_at: string
   user: User
 }
+
+export interface RequestTypes {
+  owner: string
+  repo: string
+  limit: number
+}
