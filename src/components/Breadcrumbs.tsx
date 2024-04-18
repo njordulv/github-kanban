@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem, Text } from '@chakra-ui/react'
+import { Breadcrumb, BreadcrumbItem, Link } from '@chakra-ui/react'
 import { IoChevronForward } from 'react-icons/io5'
 import { useSelector, RootState } from '../redux/store'
 import { capitalize } from 'utils/capitalize'
@@ -7,27 +7,32 @@ export default function Breadcrumbs() {
   const { owner, repo, errorMessage } = useSelector((state: RootState) => state.issues)
 
   if (errorMessage === 'Failed to load GitHub data') {
-    return <Text>{errorMessage}</Text>
+    return <></>
   }
 
   return (
     <Breadcrumb
       spacing="6px"
       fontSize="14px"
+      color="#539bf5"
       gap={7}
       maxW={1170}
       mx="auto"
       position="absolute"
-      bottom={0}
+      bottom="18px"
       left={0}
       right={0}
-      separator={<IoChevronForward color="gray.300" />}
+      separator={<IoChevronForward />}
     >
       <BreadcrumbItem>
-        <Text transform="capitalize">{capitalize(owner)}</Text>
+        <Link href={`https://github.com/${owner}`} isExternal transform="capitalize">
+          {capitalize(owner)}
+        </Link>
       </BreadcrumbItem>
       <BreadcrumbItem>
-        <Text transform="capitalize">{capitalize(repo)}</Text>
+        <Link href={`https://github.com/${owner}/${repo}`} isExternal transform="capitalize">
+          {capitalize(repo)}
+        </Link>
       </BreadcrumbItem>
     </Breadcrumb>
   )

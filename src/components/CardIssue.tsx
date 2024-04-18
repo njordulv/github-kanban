@@ -6,7 +6,7 @@ export default function CardIssue({ title, number, comments, user, created_at }:
   return (
     <Card variant="outline" bg="#22272e" borderColor="#444c56" rounded="md" color="#717e8b" p={3} fontSize={13} gap={1}>
       <CardHeader p={0}>
-        <Heading textColor="#c5d1de" fontSize={15}>
+        <Heading textColor="#c5d1de" fontSize={15} mb={1}>
           {title}
         </Heading>
       </CardHeader>

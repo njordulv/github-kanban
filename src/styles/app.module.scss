@@ -7,11 +7,11 @@ body {
 .content {
   background-color: transparent;
   color: #c5d1de;
-  margin: 1.75rem auto;
+  margin: 0 auto;
   width: 100%;
   padding: 0 1.75rem;
   max-width: 1230px;
-  min-height: calc(100vh - 155px);
+  min-height: calc(100vh - 175px);
 
   &__boxes {
     gap: 1.75rem;
@@ -22,6 +22,7 @@ body {
     border: 1px solid #444c56;
     border-radius: 5px;
     background-color: transparent;
+    max-width: 373px;
   }
 
   &__heading {

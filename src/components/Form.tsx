@@ -1,42 +1,50 @@
 import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
 import { RootState, AppDispatch, useSelector, useDispatch } from '../redux/store'
-import { loadIssues, setInputVal, setErrorMessage, setOwner, setRepo } from '../redux/slices/issuesSlice'
+import { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo } from '../redux/issuesSlice'
+import { loadRepoIssues } from '../utils/githubApiThunks'
 import Breadcrumbs from 'components/Breadcrumbs'
 
 export default function Form() {
   const dispatch: AppDispatch = useDispatch()
-  const { inputVal, errorMessage, loading, owner, repo } = useSelector((state: RootState) => state.issues)
+  const { inputVal, lastUrl, errorMessage, loading, owner, repo } = useSelector((state: RootState) => state.issues)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputVal(event.target.value)
     dispatch(setInputVal(event.target.value))
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    if (!inputVal.trim()) {
-      return
-    }
-    const repoInfo = extractRepoInfo(inputVal)
-    if (!repoInfo) {
-      return
-    }
-    extractRepoInfo(inputVal)
-    if (owner && repo) {
-      dispatch(loadIssues({ owner, repo, limit: 5 }))
-    }
-  }
-
   const extractRepoInfo = (url: string) => {
     const match = url.match(/https?:\/\/github.com\/([^/]+)\/([^/]+)/)
+
     if (!match) {
       dispatch(setErrorMessage('Invalid GitHub repository URL'))
+      setTimeout(() => dispatch(setErrorMessage('')), 3000)
       return null
     }
+
     const [, owner, repo] = match
     dispatch(setOwner(owner))
     dispatch(setRepo(repo))
+
     return { owner, repo }
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLDivElement>) => {
+    event.preventDefault()
+
+    if (!inputVal.trim()) {
+      dispatch(setErrorMessage('The input field cannot be empty'))
+      setTimeout(() => dispatch(setErrorMessage('')), 3000)
+      return
+    }
+
+    if (inputVal !== lastUrl) {
+      const repoInfo = extractRepoInfo(inputVal)
+      if (repoInfo) {
+        dispatch(loadRepoIssues({ owner: repoInfo.owner, repo: repoInfo.repo, limit: 5 }))
+        dispatch(setLastUrl(inputVal))
+      }
+    }
   }
 
   return (
@@ -55,7 +63,7 @@ export default function Form() {
             Load issues
           </Button>
           {errorMessage && (
-            <FormHelperText color="coral" fontSize={12} position="absolute" bottom="-21px">
+            <FormHelperText color="white" fontSize={11} position="absolute" bottom="-14px">
               {errorMessage}
             </FormHelperText>
           )}

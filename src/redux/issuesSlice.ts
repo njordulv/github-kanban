@@ -1,13 +1,13 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../store'
-import { RequestTypes, Issue } from 'types'
-import { fetchRepoIssues } from 'api/githubAPI'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from './store'
+import { Issue } from 'types'
+import { loadRepoIssues } from '../utils/githubApiThunks'
 
 interface StateTypes {
   inputVal: string
+  lastUrl: string
   issues: Issue[]
   isDataLoaded: boolean
-  hasMoreData: boolean
   loading: boolean
   errorMessage: string | null
   owner: string
@@ -16,25 +16,14 @@ interface StateTypes {
 
 const initialState: StateTypes = {
   inputVal: '',
+  lastUrl: '',
   issues: [] as Issue[],
   isDataLoaded: false,
-  hasMoreData: true,
   loading: false,
   errorMessage: '',
   owner: '',
   repo: ''
 }
-
-export const loadIssues = createAsyncThunk<Issue[], RequestTypes, { rejectValue: string }>(
-  'issues/load',
-  async ({ owner, repo, limit = 5 }, { rejectWithValue }) => {
-    try {
-      return await fetchRepoIssues(owner, repo, limit)
-    } catch (error) {
-      return rejectWithValue('Failed to load GitHub data')
-    }
-  }
-)
 
 const issuesSlice = createSlice({
   name: 'issues',
@@ -42,6 +31,9 @@ const issuesSlice = createSlice({
   reducers: {
     setInputVal: (state, action: PayloadAction<string>) => {
       state.inputVal = action.payload
+    },
+    setLastUrl: (state, action: PayloadAction<string>) => {
+      state.lastUrl = action.payload
     },
     setErrorMessage: (state, action: PayloadAction<string>) => {
       state.errorMessage = action.payload
@@ -55,29 +47,27 @@ const issuesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadIssues.pending, (state) => {
+      .addCase(loadRepoIssues.pending, (state) => {
         state.loading = true
       })
-      .addCase(loadIssues.fulfilled, (state, action) => {
-        const oldLength = state.issues.length
+      .addCase(loadRepoIssues.fulfilled, (state, action) => {
         state.issues = action.payload
-        state.hasMoreData = action.payload.length > oldLength
         state.isDataLoaded = true
         state.loading = false
         state.errorMessage = ''
       })
-      .addCase(loadIssues.rejected, (state, action) => {
+      .addCase(loadRepoIssues.rejected, (state, action) => {
         state.loading = false
         state.errorMessage = action.payload as string
       })
   }
 })
 
-export const { setInputVal, setErrorMessage, setOwner, setRepo } = issuesSlice.actions
+export const { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo } = issuesSlice.actions
 export const selectInputVal = (state: RootState) => state.issues.inputVal
+export const selectLastUrl = (state: RootState) => state.issues.lastUrl
 export const selectIssues = (state: RootState) => state.issues.issues
 export const selectIsDataLoaded = (state: RootState) => state.issues.isDataLoaded
-export const selectHasMoreData = (state: RootState) => state.issues.hasMoreData
 export const selectErrorMessage = (state: RootState) => state.issues.errorMessage
 export const selectLoading = (state: RootState) => state.issues.loading
 export const selectOwner = (state: RootState) => state.issues.owner
