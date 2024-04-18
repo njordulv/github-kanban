@@ -26,3 +26,15 @@ export const loadRepoIssues = createAsyncThunk<Issue[], RequestTypes, { rejectVa
     }
   }
 )
+
+export const fetchRepo = createAsyncThunk(
+  'issues/fetchRepo',
+  async ({ owner, repo }: RequestTypes, { rejectWithValue }) => {
+    try {
+      const response = await getGithubApi.get(`/repos/${owner}/${repo}`)
+      return response.data.stargazers_count
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Error fetching repository')
+    }
+  }
+)

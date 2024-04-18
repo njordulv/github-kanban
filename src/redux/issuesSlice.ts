@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { Issue } from 'types'
-import { loadRepoIssues } from '../utils/githubApiThunks'
+import { loadRepoIssues, fetchRepo } from '../utils/githubApiThunks'
 
 interface StateTypes {
   inputVal: string
@@ -12,6 +12,7 @@ interface StateTypes {
   errorMessage: string | null
   owner: string
   repo: string
+  repoStars: number
 }
 
 const initialState: StateTypes = {
@@ -22,7 +23,8 @@ const initialState: StateTypes = {
   loading: false,
   errorMessage: '',
   owner: '',
-  repo: ''
+  repo: '',
+  repoStars: 0
 }
 
 const issuesSlice = createSlice({
@@ -43,6 +45,9 @@ const issuesSlice = createSlice({
     },
     setRepo: (state, action: PayloadAction<string>) => {
       state.repo = action.payload
+    },
+    setRepoStars: (state, action: PayloadAction<number>) => {
+      state.repoStars = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -60,10 +65,20 @@ const issuesSlice = createSlice({
         state.loading = false
         state.errorMessage = action.payload as string
       })
+      .addCase(fetchRepo.fulfilled, (state, action) => {
+        if (typeof action.payload === 'number') {
+          state.repoStars = action.payload
+        } else {
+          state.errorMessage = ''
+        }
+      })
+      .addCase(fetchRepo.rejected, (state, action) => {
+        state.errorMessage = action.payload as string
+      })
   }
 })
 
-export const { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo } = issuesSlice.actions
+export const { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo, setRepoStars } = issuesSlice.actions
 export const selectInputVal = (state: RootState) => state.issues.inputVal
 export const selectLastUrl = (state: RootState) => state.issues.lastUrl
 export const selectIssues = (state: RootState) => state.issues.issues
@@ -72,5 +87,6 @@ export const selectErrorMessage = (state: RootState) => state.issues.errorMessag
 export const selectLoading = (state: RootState) => state.issues.loading
 export const selectOwner = (state: RootState) => state.issues.owner
 export const selectRepo = (state: RootState) => state.issues.repo
+export const selectRepoStars = (state: RootState) => state.issues.repoStars
 
 export default issuesSlice.reducer

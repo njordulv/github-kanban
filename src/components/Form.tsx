@@ -1,8 +1,9 @@
 import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
 import { RootState, AppDispatch, useSelector, useDispatch } from '../redux/store'
 import { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo } from '../redux/issuesSlice'
-import { loadRepoIssues } from '../utils/githubApiThunks'
+import { loadRepoIssues } from 'utils/githubApiThunks'
 import Breadcrumbs from 'components/Breadcrumbs'
+import Stars from 'components/Stars'
 
 export default function Form() {
   const dispatch: AppDispatch = useDispatch()
@@ -69,7 +70,22 @@ export default function Form() {
           )}
         </Flex>
       </FormControl>
-      {owner && repo && <Breadcrumbs />}
+      {owner && repo && (
+        <Flex
+          maxW={1170}
+          mx="auto"
+          position="absolute"
+          alignItems="center"
+          bottom="18px"
+          left={0}
+          right={0}
+          gap={3}
+          fontSize="14px"
+        >
+          <Breadcrumbs />
+          <Stars owner={owner} repo={repo} />
+        </Flex>
+      )}
     </>
   )
 }
