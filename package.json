@@ -1,6 +1,6 @@
 {
   "name": "github-kanban",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
@@ -13,10 +13,12 @@
     "@types/jest": "^28.1.1",
     "@types/node": "^12.0.0",
     "@types/react": "^18.0.9",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.0.4",
     "axios": "^1.6.8",
     "framer-motion": "^6.2.9",
     "react": "^18.1.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.1.0",
     "react-icons": "^5.1.0",
     "react-redux": "^9.1.1",

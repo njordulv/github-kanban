@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  background-color: #22272e;
+  font-family: 'Open Sans', sans-serif;
+}
+
+ul {
+  list-style: none;
+}
