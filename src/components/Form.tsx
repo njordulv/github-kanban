@@ -43,7 +43,7 @@ export default function Form() {
     if (inputVal !== lastUrl) {
       const repoInfo = extractRepoInfo(inputVal)
       if (repoInfo) {
-        dispatch(loadRepoIssues({ owner: repoInfo.owner, repo: repoInfo.repo, limit: 5 }))
+        dispatch(loadRepoIssues({ owner: repoInfo.owner, repo: repoInfo.repo, limit: 10 }))
         dispatch(setLastUrl(inputVal))
       }
     }

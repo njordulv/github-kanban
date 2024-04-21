@@ -10,6 +10,7 @@ export interface User {
 export interface Issue {
   id: number
   title: string
+  html_url: string
   number: number
   comments: number
   created_at: string

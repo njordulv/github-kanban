@@ -17,7 +17,7 @@ const fetchRepoIssues = async ({ owner, repo, limit }: RequestTypes) => {
 
 export const loadRepoIssues = createAsyncThunk<Issue[], RequestTypes, { rejectValue: string }>(
   'issues/loadRepoIssues',
-  async ({ owner, repo, limit = 5 }, { rejectWithValue }) => {
+  async ({ owner, repo, limit }, { rejectWithValue }) => {
     try {
       const issues = await fetchRepoIssues({ owner, repo, limit })
       return issues
