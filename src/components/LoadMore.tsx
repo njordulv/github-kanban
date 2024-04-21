@@ -1,5 +1,6 @@
 import { Button, Text } from '@chakra-ui/react'
-import { AppDispatch, useSelector, useDispatch, RootState } from '../redux/store'
+import { AppDispatch, RootState } from '../redux/store'
+import { useSelector, useDispatch } from 'react-redux'
 import { Issue } from 'types'
 import { loadRepoIssues } from '../utils/githubApiThunks'
 

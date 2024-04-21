@@ -1,7 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist'
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage'
-import { useSelector as useReduxSelector, useDispatch as useReduxDispatch } from 'react-redux'
 import issuesReducer from './issuesSlice'
 
 const rootReducer = combineReducers({
@@ -46,5 +45,3 @@ export const reduxStore = configureStore({
 export type RootState = ReturnType<typeof reduxStore.getState>
 export const persistor = persistStore(reduxStore)
 export type AppDispatch = typeof reduxStore.dispatch
-export const useDispatch = () => useReduxDispatch()
-export const useSelector = useReduxSelector

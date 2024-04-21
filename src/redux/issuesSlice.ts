@@ -3,6 +3,22 @@ import { RootState } from './store'
 import { Issue } from 'types'
 import { loadRepoIssues, fetchRepo } from '../utils/githubApiThunks'
 
+interface TaskStatus {
+  toDo: {
+    name: string
+    items: Issue[]
+  }
+  inProgress: {
+    name: string
+    items: Issue[]
+  }
+  done: {
+    name: string
+    items: Issue[]
+  }
+  [key: string]: { name: string; items: Issue[] }
+}
+
 interface StateTypes {
   inputVal: string
   lastUrl: string
@@ -13,6 +29,7 @@ interface StateTypes {
   owner: string
   repo: string
   repoStars: number
+  taskStatus: TaskStatus
 }
 
 const initialState: StateTypes = {
@@ -24,7 +41,21 @@ const initialState: StateTypes = {
   errorMessage: '',
   owner: '',
   repo: '',
-  repoStars: 0
+  repoStars: 0,
+  taskStatus: {
+    toDo: {
+      name: 'To do',
+      items: []
+    },
+    inProgress: {
+      name: 'Progress',
+      items: []
+    },
+    done: {
+      name: 'Done',
+      items: []
+    }
+  }
 }
 
 const issuesSlice = createSlice({
@@ -48,6 +79,9 @@ const issuesSlice = createSlice({
     },
     setRepoStars: (state, action: PayloadAction<number>) => {
       state.repoStars = action.payload
+    },
+    setTaskStatus: (state, action: PayloadAction<TaskStatus>) => {
+      state.taskStatus = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -78,7 +112,8 @@ const issuesSlice = createSlice({
   }
 })
 
-export const { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo, setRepoStars } = issuesSlice.actions
+export const { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo, setRepoStars, setTaskStatus } =
+  issuesSlice.actions
 export const selectInputVal = (state: RootState) => state.issues.inputVal
 export const selectLastUrl = (state: RootState) => state.issues.lastUrl
 export const selectIssues = (state: RootState) => state.issues.issues
@@ -88,5 +123,6 @@ export const selectLoading = (state: RootState) => state.issues.loading
 export const selectOwner = (state: RootState) => state.issues.owner
 export const selectRepo = (state: RootState) => state.issues.repo
 export const selectRepoStars = (state: RootState) => state.issues.repoStars
+export const selectTaskStatus = (state: RootState) => state.issues.taskStatus
 
 export default issuesSlice.reducer

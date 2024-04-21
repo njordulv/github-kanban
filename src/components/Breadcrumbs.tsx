@@ -1,6 +1,7 @@
 import { Breadcrumb, BreadcrumbItem, Link } from '@chakra-ui/react'
 import { IoChevronForward } from 'react-icons/io5'
-import { useSelector, RootState } from '../redux/store'
+import { RootState } from '../redux/store'
+import { useSelector } from 'react-redux'
 import { capitalize } from 'utils/capitalize'
 
 export default function Breadcrumbs() {

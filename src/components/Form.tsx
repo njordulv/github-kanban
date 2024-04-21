@@ -1,5 +1,6 @@
 import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
-import { RootState, AppDispatch, useSelector, useDispatch } from '../redux/store'
+import { RootState, AppDispatch } from '../redux/store'
+import { useSelector, useDispatch } from 'react-redux'
 import { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo } from '../redux/issuesSlice'
 import { loadRepoIssues } from 'utils/githubApiThunks'
 import Breadcrumbs from 'components/Breadcrumbs'
