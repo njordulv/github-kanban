@@ -6,17 +6,20 @@ import { loadRepoIssues, fetchRepo } from '../utils/githubApiThunks'
 interface TaskStatus {
   toDo: {
     name: string
-    items: Issue[]
+    items: { issue: Issue; position: { x: number; y: number } }[]
   }
   inProgress: {
     name: string
-    items: Issue[]
+    items: { issue: Issue; position: { x: number; y: number } }[]
   }
   done: {
     name: string
-    items: Issue[]
+    items: { issue: Issue; position: { x: number; y: number } }[]
   }
-  [key: string]: { name: string; items: Issue[] }
+  [key: string]: {
+    name: string
+    items: { issue: Issue; position: { x: number; y: number } }[]
+  }
 }
 
 interface StateTypes {
@@ -44,11 +47,11 @@ const initialState: StateTypes = {
   repoStars: 0,
   taskStatus: {
     toDo: {
-      name: 'To do',
+      name: 'To Do',
       items: []
     },
     inProgress: {
-      name: 'Progress',
+      name: 'In Progress',
       items: []
     },
     done: {
@@ -94,6 +97,23 @@ const issuesSlice = createSlice({
         state.isDataLoaded = true
         state.loading = false
         state.errorMessage = ''
+        state.taskStatus = {
+          toDo: {
+            name: 'To Do',
+            items: action.payload.map((issue, index) => ({
+              issue,
+              position: { x: 0, y: index * 50 }
+            }))
+          },
+          inProgress: {
+            name: 'In Progress',
+            items: []
+          },
+          done: {
+            name: 'Done',
+            items: []
+          }
+        }
       })
       .addCase(loadRepoIssues.rejected, (state, action) => {
         state.loading = false

@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Box, Heading, Grid, GridItem } from '@chakra-ui/react'
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd'
 import { RootState } from '../redux/store'
@@ -9,26 +8,7 @@ import LoadMore from 'components/LoadMore'
 
 function Board() {
   const dispatch = useDispatch()
-  const { issues, inputVal, taskStatus } = useSelector((state: RootState) => state.issues)
-
-  useEffect(() => {
-    dispatch(
-      setTaskStatus({
-        toDo: {
-          name: 'To do',
-          items: issues
-        },
-        inProgress: {
-          name: 'Progress',
-          items: []
-        },
-        done: {
-          name: 'Done',
-          items: []
-        }
-      })
-    )
-  }, [dispatch, issues])
+  const { inputVal, taskStatus } = useSelector((state: RootState) => state.issues)
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return
@@ -50,7 +30,10 @@ function Board() {
         },
         [destination.droppableId]: {
           ...destColumn,
-          items: destItems
+          items: destItems.map((item, index) => ({
+            ...item,
+            position: { x: 0, y: index * 50 }
+          }))
         }
       }
 
@@ -62,7 +45,10 @@ function Board() {
       copiedItems.splice(destination.index, 0, removed)
       const updatedColumn = {
         ...column,
-        items: copiedItems
+        items: copiedItems.map((item, index) => ({
+          ...item,
+          position: { x: 0, y: index * 50 }
+        }))
       }
 
       const updatedTaskStatus = {
@@ -103,7 +89,7 @@ function Board() {
                     h="100%"
                   >
                     {column.items.map((item, index) => (
-                      <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
+                      <Draggable key={item.issue.id} draggableId={item.issue.id.toString()} index={index}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
@@ -120,12 +106,14 @@ function Board() {
                               ...provided.draggableProps.style
                             }}
                           >
-                            <Task key={item.id} {...item} />
+                            <Task key={item.issue.id} {...item.issue} />
                           </div>
                         )}
                       </Draggable>
                     ))}
-                    {columnId === 'toDo' && <LoadMore inputVal={inputVal} issues={issues} />}
+                    {columnId === 'toDo' && (
+                      <LoadMore inputVal={inputVal} issues={column.items.map((item) => item.issue)} />
+                    )}
                     {provided.placeholder}
                   </Box>
                 )}
