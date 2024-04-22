@@ -6,7 +6,7 @@ This project implements a Kanban board for viewing GitHub repository issues. It 
 
 ### Features
 
-1. URL Input: Users can enter a GitHub repository URL to load issues.
+1. URL Input: Users can enter a GitHub repository URL to load all open issues.
 2. Dynamic Issue Loading: Utilizes the GitHub API to fetch issues for a specified repository.
 3. Kanban Columns: Issues are displayed in three columns:
 4. ToDo: Contains new issues.
@@ -18,11 +18,12 @@ This project implements a Kanban board for viewing GitHub repository issues. It 
 
 ### Technologies
 
-- Frontend library: React 18
-- State Management: Redux Toolkit
+- Frontend library: React ^18
+- State Management: Redux Toolkit, Redux Persist
 - UI design system: Chakra UI
-- Testing: React Testing Library
 - Languages: TypeScript
+- Libraries: React Beautiful DnD
+- Testing: React Testing Library
 
 ### Installation
 
@@ -35,15 +36,21 @@ cd github-kanban
 
 yarn install
 
-3. Start the application:
+3. Set up the GitHub API key:
+
+- To ensure the app functions properly, you need to add a GitHub API key to the REACT_APP_GITHUB_API_KEY environment variable. Create a .env file in the project's root directory with the following content:
+- REACT_APP_GITHUB_API_KEY = 'your_github_api_key_here'
+- Replace 'your_github_api_key_here' with your actual GitHub API key. If you don't have a key, you can generate one in your GitHub account settings.
+
+4. Start the application:
 
 yarn start
 
-4. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to access the app.
+5. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000) to access the app.
 
 ### Usage
 
-To use the application, enter the URL of a GitHub repository at the top of the page and press "Load". The application will fetch and display the issues in the respective Kanban columns. Drag and drop issues to update their status and order.
+To use the application, enter the URL of a GitHub repository at the top of the page and press "Load Issues". The application will fetch and display the new open issues in the respective Kanban columns. Drag and drop issues to update their status and order.
 
 ### Configuration
 

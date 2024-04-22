@@ -6,7 +6,7 @@ import { loadRepoIssues } from 'utils/githubApiThunks'
 import Breadcrumbs from 'components/Breadcrumbs'
 import Stars from 'components/Stars'
 
-export default function Form() {
+export default function Header() {
   const dispatch: AppDispatch = useDispatch()
   const { inputVal, lastUrl, errorMessage, loading, owner, repo } = useSelector((state: RootState) => state.issues)
 
