@@ -1,14 +1,13 @@
 import { Box, Heading, Grid, GridItem } from '@chakra-ui/react'
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd'
-import { RootState } from '../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../redux/store'
 import { setTaskStatus } from '../redux/issuesSlice'
 import Task from 'components/Task'
-import LoadMore from 'components/LoadMore'
 
 function Board() {
   const dispatch = useDispatch()
-  const { inputVal, taskStatus } = useSelector((state: RootState) => state.issues)
+  const { taskStatus } = useSelector((state: RootState) => state.issues)
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return
@@ -67,12 +66,14 @@ function Board() {
           return (
             <GridItem key={index} border="1px solid #444c56" borderRadius="5px" bg="transparent" maxW="378px">
               <Heading
+                as="h3"
                 p={2}
                 fontSize="18px"
                 bg="#2d323b"
                 color="#c5d1de"
                 borderBottom="1px solid #444c56"
                 borderRadius="5px 5px 0 0"
+                position="sticky"
               >
                 {column.name}
               </Heading>
@@ -85,8 +86,10 @@ function Board() {
                     flexDir="column"
                     borderRadius={2}
                     textAlign="left"
-                    p={2}
+                    p="11px"
                     h="100%"
+                    maxH="622px"
+                    overflowY="scroll"
                   >
                     {column.items.map((item, index) => (
                       <Draggable key={item.issue.id} draggableId={item.issue.id.toString()} index={index}>
@@ -111,9 +114,6 @@ function Board() {
                         )}
                       </Draggable>
                     ))}
-                    {columnId === 'toDo' && (
-                      <LoadMore inputVal={inputVal} issues={column.items.map((item) => item.issue)} />
-                    )}
                     {provided.placeholder}
                   </Box>
                 )}

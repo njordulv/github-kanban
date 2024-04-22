@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from './store'
-import { Issue } from 'types'
-import { loadRepoIssues, fetchRepo } from '../utils/githubApiThunks'
+import { Issue } from 'interfaces'
+import { loadRepoIssues, fetchRepo } from 'utils/githubApiThunks'
 
 interface TaskStatus {
   toDo: {
@@ -26,7 +26,6 @@ interface StateTypes {
   inputVal: string
   lastUrl: string
   issues: Issue[]
-  isDataLoaded: boolean
   loading: boolean
   errorMessage: string | null
   owner: string
@@ -39,7 +38,6 @@ const initialState: StateTypes = {
   inputVal: '',
   lastUrl: '',
   issues: [] as Issue[],
-  isDataLoaded: false,
   loading: false,
   errorMessage: '',
   owner: '',
@@ -94,7 +92,6 @@ const issuesSlice = createSlice({
       })
       .addCase(loadRepoIssues.fulfilled, (state, action) => {
         state.issues = action.payload
-        state.isDataLoaded = true
         state.loading = false
         state.errorMessage = ''
         state.taskStatus = {
@@ -137,7 +134,6 @@ export const { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo, setR
 export const selectInputVal = (state: RootState) => state.issues.inputVal
 export const selectLastUrl = (state: RootState) => state.issues.lastUrl
 export const selectIssues = (state: RootState) => state.issues.issues
-export const selectIsDataLoaded = (state: RootState) => state.issues.isDataLoaded
 export const selectErrorMessage = (state: RootState) => state.issues.errorMessage
 export const selectLoading = (state: RootState) => state.issues.loading
 export const selectOwner = (state: RootState) => state.issues.owner

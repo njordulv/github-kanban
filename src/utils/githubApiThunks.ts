@@ -1,6 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { RequestTypes, Issue } from 'types'
 import axios from 'axios'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { RequestTypes, Issue } from 'interfaces'
 
 const getGithubApi = axios.create({
   baseURL: 'https://api.github.com',
@@ -10,16 +10,16 @@ const getGithubApi = axios.create({
   }
 })
 
-const fetchRepoIssues = async ({ owner, repo, limit }: RequestTypes) => {
-  const response = await getGithubApi.get(`/repos/${owner}/${repo}/issues?per_page=${limit}`)
+const fetchRepoIssues = async ({ owner, repo }: RequestTypes) => {
+  const response = await getGithubApi.get(`/repos/${owner}/${repo}/issues?state=open`)
   return response.data
 }
 
 export const loadRepoIssues = createAsyncThunk<Issue[], RequestTypes, { rejectValue: string }>(
   'issues/loadRepoIssues',
-  async ({ owner, repo, limit }, { rejectWithValue }) => {
+  async ({ owner, repo }, { rejectWithValue }) => {
     try {
-      const issues = await fetchRepoIssues({ owner, repo, limit })
+      const issues = await fetchRepoIssues({ owner, repo })
       return issues
     } catch (error: any) {
       return rejectWithValue(error.message || 'Failed to load GitHub data')

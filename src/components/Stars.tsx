@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Flex, Spinner } from '@chakra-ui/react'
 import { IoStarSharp } from 'react-icons/io5'
-import { AppDispatch, RootState } from '../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/store'
 import { fetchRepo } from 'utils/githubApiThunks'
 import { getRoundedNumber } from 'utils/getRoundedNumber'
-import { RequestTypes } from 'types'
+import { RequestTypes } from 'interfaces'
 
 const Stars = ({ owner, repo }: RequestTypes) => {
   const dispatch: AppDispatch = useDispatch()

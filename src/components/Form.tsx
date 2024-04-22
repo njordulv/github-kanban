@@ -1,6 +1,6 @@
 import { FormControl, FormHelperText, Button, Flex, Input } from '@chakra-ui/react'
-import { RootState, AppDispatch } from '../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
+import { RootState, AppDispatch } from '../redux/store'
 import { setInputVal, setLastUrl, setErrorMessage, setOwner, setRepo } from '../redux/issuesSlice'
 import { loadRepoIssues } from 'utils/githubApiThunks'
 import Breadcrumbs from 'components/Breadcrumbs'
@@ -43,7 +43,7 @@ export default function Form() {
     if (inputVal !== lastUrl) {
       const repoInfo = extractRepoInfo(inputVal)
       if (repoInfo) {
-        dispatch(loadRepoIssues({ owner: repoInfo.owner, repo: repoInfo.repo, limit: 10 }))
+        dispatch(loadRepoIssues({ owner: repoInfo.owner, repo: repoInfo.repo }))
         dispatch(setLastUrl(inputVal))
       }
     }

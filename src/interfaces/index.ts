@@ -20,5 +20,4 @@ export interface Issue {
 export interface RequestTypes {
   owner: string
   repo: string
-  limit?: number
 }
