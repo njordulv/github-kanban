@@ -6,13 +6,24 @@ import 'App.css'
 
 export const App = () => (
   <AppProviders>
-    <Box textAlign="center" fontSize="xl" bg="#22272e" color="#c5d1de">
-      <GridItem px={7} py={14} position="relative">
-        <Header />
-      </GridItem>
-      <Grid color="#c5d1de" m="auto" w="100%" p={0} maxW="1170px" minH="calc(100vh - 175px)">
-        <GridItem rounded={5}>
-          <Board />
+    <Box bg="#22272e">
+      <Grid
+        textAlign="center"
+        fontSize="xl"
+        color="#c5d1de"
+        m="auto"
+        w="100%"
+        p={0}
+        maxW="1170px"
+        minH="calc(100vh - 275px)"
+      >
+        <GridItem px={7} py={14} position="relative">
+          <Header />
+        </GridItem>
+        <GridItem px={7} rounded={5}>
+          <Box color="#c5d1de">
+            <Board />
+          </Box>
         </GridItem>
       </Grid>
     </Box>

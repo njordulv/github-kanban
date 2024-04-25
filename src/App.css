@@ -13,3 +13,35 @@ body {
 ul {
   list-style: none;
 }
+
+.columnAddItem {
+  position: relative;
+}
+
+.columnAddItem:before {
+  position: absolute;
+  content: '';
+  top: 11px;
+  left: 11px;
+  right: 11px;
+  height: 93px;
+  border-radius: 5px;
+  z-index: 0;
+  border: 1px inset rgb(68, 76, 86);
+  opacity: 0.6;
+}
+
+.columnAddItem:after {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  content: '\2295';
+  font-size: 54px;
+  top: 30px;
+  left: 50%;
+  margin-left: -27px;
+  height: 54px;
+  width: 54px;
+  opacity: 0.1;
+}

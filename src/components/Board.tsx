@@ -86,6 +86,7 @@ function Board() {
                     flexDir="column"
                     borderRadius={2}
                     textAlign="left"
+                    className="columnAddItem"
                     p="11px"
                     h="100%"
                     maxH="622px"
@@ -106,6 +107,7 @@ function Board() {
                               borderRadius: '5px',
                               borderColor: snapshot.isDragging ? '#539bf5' : '#444c56',
                               color: 'white',
+                              zIndex: 1,
                               ...provided.draggableProps.style
                             }}
                           >

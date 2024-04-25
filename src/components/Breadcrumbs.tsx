@@ -12,7 +12,7 @@ export default function Breadcrumbs() {
   }
 
   return (
-    <Breadcrumb spacing="6px" fontSize="14px" color="#539bf5" gap={7} separator={<IoChevronForward />}>
+    <Breadcrumb spacing="6px" fontSize="14px" color="#539bf5" gap={7} px={7} separator={<IoChevronForward />}>
       <BreadcrumbItem>
         <Link href={`https://github.com/${owner}`} isExternal transform="capitalize">
           {capitalize(owner)}
