@@ -90,6 +90,7 @@ function Board() {
                     p="11px"
                     h="100%"
                     maxH="622px"
+                    minH="calc(100vh - 220px)"
                     overflowY="scroll"
                   >
                     {column.items.map((item, index) => (
