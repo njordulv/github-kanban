@@ -2,7 +2,7 @@ import { Box, Grid, GridItem } from '@chakra-ui/react'
 import AppProviders from 'providers/AppProviders'
 import Header from 'components/Header'
 import Board from 'components/Board'
-import 'App.css'
+import 'components/App/App.css'
 
 export const App = () => (
   <AppProviders>

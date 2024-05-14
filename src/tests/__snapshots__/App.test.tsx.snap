@@ -1,0 +1,318 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component If renders correctly 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body
+    class="chakra-ui-light"
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      id="rbd-announcement-0"
+      style="position: absolute; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; clip-path: inset(100%);"
+    />
+    <div>
+      <div
+        class="css-wa68tp"
+      >
+        <div
+          class="css-1dcuefj"
+        >
+          <div
+            class="css-1yi0olm"
+          >
+            <div
+              class="chakra-form-control css-1kxonj9"
+              role="group"
+            >
+              <form
+                class="css-1m42ln8"
+              >
+                <input
+                  class="chakra-input css-102u4x6"
+                  id="field-:r1:"
+                  placeholder="Enter repo URL"
+                  type="text"
+                  value=""
+                />
+                <button
+                  class="chakra-button css-19tgw0z"
+                  type="submit"
+                >
+                  Load issues
+                </button>
+              </form>
+            </div>
+          </div>
+          <div
+            class="css-pbew5c"
+          >
+            <div
+              class="css-5dlt6v"
+            >
+              <div
+                class="css-xnby5e"
+              >
+                <div
+                  class="css-116cwdx"
+                >
+                  <h3
+                    class="chakra-heading css-5ms7ou"
+                  >
+                    To Do
+                  </h3>
+                  <div
+                    class="columnAddItem css-hrbizy"
+                    data-rbd-droppable-context-id="1"
+                    data-rbd-droppable-id="toDo"
+                  />
+                </div>
+                <div
+                  class="css-116cwdx"
+                >
+                  <h3
+                    class="chakra-heading css-5ms7ou"
+                  >
+                    In Progress
+                  </h3>
+                  <div
+                    class="columnAddItem css-hrbizy"
+                    data-rbd-droppable-context-id="1"
+                    data-rbd-droppable-id="inProgress"
+                  />
+                </div>
+                <div
+                  class="css-116cwdx"
+                >
+                  <h3
+                    class="chakra-heading css-5ms7ou"
+                  >
+                    Done
+                  </h3>
+                  <div
+                    class="columnAddItem css-hrbizy"
+                    data-rbd-droppable-context-id="1"
+                    data-rbd-droppable-id="done"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span
+        hidden=""
+        id="__chakra_env"
+      />
+    </div>
+    <div
+      class="chakra-portal"
+    >
+      <div
+        aria-label="Notifications-top"
+        aria-live="polite"
+        id="chakra-toast-manager-top"
+        role="region"
+        style="position: fixed; z-index: var(--toast-z-index, 5500); pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <div
+        aria-label="Notifications-top-left"
+        aria-live="polite"
+        id="chakra-toast-manager-top-left"
+        role="region"
+        style="position: fixed; z-index: var(--toast-z-index, 5500); pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <div
+        aria-label="Notifications-top-right"
+        aria-live="polite"
+        id="chakra-toast-manager-top-right"
+        role="region"
+        style="position: fixed; z-index: var(--toast-z-index, 5500); pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <div
+        aria-label="Notifications-bottom-left"
+        aria-live="polite"
+        id="chakra-toast-manager-bottom-left"
+        role="region"
+        style="position: fixed; z-index: var(--toast-z-index, 5500); pointer-events: none; display: flex; flex-direction: column;"
+      />
+      <div
+        aria-label="Notifications-bottom"
+        aria-live="polite"
+        id="chakra-toast-manager-bottom"
+        role="region"
+        style="position: fixed; z-index: var(--toast-z-index, 5500); pointer-events: none; display: flex; flex-direction: column; margin: 0px auto;"
+      />
+      <div
+        aria-label="Notifications-bottom-right"
+        aria-live="polite"
+        id="chakra-toast-manager-bottom-right"
+        role="region"
+        style="position: fixed; z-index: var(--toast-z-index, 5500); pointer-events: none; display: flex; flex-direction: column;"
+      />
+    </div>
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      id="rbd-announcement-1"
+      style="position: absolute; width: 1px; height: 1px; margin: -1px; border: 0px; padding: 0px; overflow: hidden; clip-path: inset(100%);"
+    />
+    <div
+      id="rbd-hidden-text-1-hidden-text-4"
+      style="display: none;"
+    >
+      
+  Press space bar to start a drag.
+  When dragging you can use the arrow keys to move the item around and escape to cancel.
+  Some screen readers may require you to be in focus mode or to use your pass through key
+
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="css-wa68tp"
+    >
+      <div
+        class="css-1dcuefj"
+      >
+        <div
+          class="css-1yi0olm"
+        >
+          <div
+            class="chakra-form-control css-1kxonj9"
+            role="group"
+          >
+            <form
+              class="css-1m42ln8"
+            >
+              <input
+                class="chakra-input css-102u4x6"
+                id="field-:r1:"
+                placeholder="Enter repo URL"
+                type="text"
+                value=""
+              />
+              <button
+                class="chakra-button css-19tgw0z"
+                type="submit"
+              >
+                Load issues
+              </button>
+            </form>
+          </div>
+        </div>
+        <div
+          class="css-pbew5c"
+        >
+          <div
+            class="css-5dlt6v"
+          >
+            <div
+              class="css-xnby5e"
+            >
+              <div
+                class="css-116cwdx"
+              >
+                <h3
+                  class="chakra-heading css-5ms7ou"
+                >
+                  To Do
+                </h3>
+                <div
+                  class="columnAddItem css-hrbizy"
+                  data-rbd-droppable-context-id="1"
+                  data-rbd-droppable-id="toDo"
+                />
+              </div>
+              <div
+                class="css-116cwdx"
+              >
+                <h3
+                  class="chakra-heading css-5ms7ou"
+                >
+                  In Progress
+                </h3>
+                <div
+                  class="columnAddItem css-hrbizy"
+                  data-rbd-droppable-context-id="1"
+                  data-rbd-droppable-id="inProgress"
+                />
+              </div>
+              <div
+                class="css-116cwdx"
+              >
+                <h3
+                  class="chakra-heading css-5ms7ou"
+                >
+                  Done
+                </h3>
+                <div
+                  class="columnAddItem css-hrbizy"
+                  data-rbd-droppable-context-id="1"
+                  data-rbd-droppable-id="done"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span
+      hidden=""
+      id="__chakra_env"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
