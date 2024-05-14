@@ -1,11 +1,11 @@
 {
   "name": "github-kanban",
-  "version": "0.3.3",
-  "private": true,
+  "version": "0.3.4",
+  "private": false,
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@reduxjs/toolkit": "^2.2.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.1",
@@ -15,7 +15,7 @@
     "@types/react": "^18.0.9",
     "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.0.4",
-    "framer-motion": "^6.2.9",
+    "framer-motion": "^11.2.0",
     "react": "^18.1.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.1.0",
@@ -23,7 +23,6 @@
     "react-redux": "^9.1.1",
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
-    "sass": "^1.75.0",
     "typescript": "^4.6.3"
   },
   "scripts": {
@@ -51,7 +50,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "jest": "^29.7.0",
-    "postcss": "^8.4.38",
     "prettier": "^3.2.5"
   }
 }
