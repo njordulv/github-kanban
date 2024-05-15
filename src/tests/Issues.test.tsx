@@ -1,34 +1,17 @@
-import reducer, { setInputVal, setErrorMessage, setOwner, setRepo, setRepoStars } from '../redux/issuesSlice'
+import reducer, {
+  initialState,
+  setInputVal,
+  setErrorMessage,
+  setOwner,
+  setRepo,
+  setRepoStars
+} from '../redux/issuesSlice'
 import { loadRepoIssues } from 'utils/githubApiThunks'
 
-const initialState = {
-  inputVal: '',
-  lastUrl: '',
-  issues: [],
-  loading: false,
-  errorMessage: '',
-  owner: '',
-  repo: '',
-  repoStars: 0,
-  taskStatus: {
-    toDo: {
-      name: 'To Do',
-      items: []
-    },
-    inProgress: {
-      name: 'In Progress',
-      items: []
-    },
-    done: {
-      name: 'Done',
-      items: []
-    }
-  }
-}
+const linkRepo = 'https://github.com/owner/repo'
+const error = 'Failed to fetch issues'
 
-describe('Issues reducers', () => {
-  const linkRepo = 'https://github.com/owner/repo'
-
+describe('Issue reducers', () => {
   it('should handle input value', () => {
     const action = setInputVal(linkRepo)
     const nextState = reducer(initialState, action)
@@ -37,10 +20,10 @@ describe('Issues reducers', () => {
   })
 
   it('should handle error message', () => {
-    const action = setErrorMessage('Failed to load issues')
+    const action = setErrorMessage(error)
     const nextState = reducer(initialState, action)
 
-    expect(nextState.errorMessage).toBe('Failed to load issues')
+    expect(nextState.errorMessage).toBe(error)
   })
 
   it('should handle owner', () => {
@@ -65,8 +48,8 @@ describe('Issues reducers', () => {
   })
 })
 
-describe('Issues extraReducers', () => {
-  it('should handle loadRepoIssues.pending', () => {
+describe('Issue extraReducers', () => {
+  it('should fetch issues with loadRepoIssues.pending action', () => {
     const action = { type: loadRepoIssues.pending.type }
     const nextState = reducer(initialState, action)
 
@@ -74,7 +57,7 @@ describe('Issues extraReducers', () => {
     expect(nextState.errorMessage).toBe('')
   })
 
-  it('should handle loadRepoIssues.fulfilled', () => {
+  it('should fetch issues with loadRepoIssues.fulfilled action', () => {
     const mockIssues = [
       { id: 1, title: 'Issue 1' },
       { id: 2, title: 'Issue 2' }
@@ -104,8 +87,7 @@ describe('Issues extraReducers', () => {
     })
   })
 
-  it('should handle loadRepoIssues.rejected', () => {
-    const error = 'Failed to fetch issues'
+  it('should fetch issues with loadRepoIssues.rejected action', () => {
     const action = { type: loadRepoIssues.rejected.type, payload: error }
     const nextState = reducer(initialState, action)
 

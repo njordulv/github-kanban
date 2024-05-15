@@ -1,40 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from './store'
-import { Issue } from 'interfaces'
+import { Issue, TaskStatus, StateTypes } from 'interfaces'
 import { loadRepoIssues, fetchRepo } from 'utils/githubApiThunks'
 
-interface TaskStatus {
-  toDo: {
-    name: string
-    items: { issue: Issue; position: { x: number; y: number } }[]
-  }
-  inProgress: {
-    name: string
-    items: { issue: Issue; position: { x: number; y: number } }[]
-  }
-  done: {
-    name: string
-    items: { issue: Issue; position: { x: number; y: number } }[]
-  }
-  [key: string]: {
-    name: string
-    items: { issue: Issue; position: { x: number; y: number } }[]
-  }
-}
-
-interface StateTypes {
-  inputVal: string
-  lastUrl: string
-  issues: Issue[]
-  loading: boolean
-  errorMessage: string | null
-  owner: string
-  repo: string
-  repoStars: number
-  taskStatus: TaskStatus
-}
-
-const initialState: StateTypes = {
+export const initialState: StateTypes = {
   inputVal: '',
   lastUrl: '',
   issues: [] as Issue[],
