@@ -6,7 +6,7 @@ import reducer, {
   setRepo,
   setRepoStars
 } from '../redux/issuesSlice'
-import { loadRepoIssues } from 'utils/githubApiThunks'
+import { loadRepoIssues, fetchRepo } from 'utils/githubApiThunks'
 
 const linkRepo = 'https://github.com/owner/repo'
 const error = 'Failed to fetch issues'
@@ -89,6 +89,30 @@ describe('Issue extraReducers', () => {
 
   it('should fetch issues with loadRepoIssues.rejected action', () => {
     const action = { type: loadRepoIssues.rejected.type, payload: error }
+    const nextState = reducer(initialState, action)
+
+    expect(nextState.loading).toBe(false)
+    expect(nextState.errorMessage).toBe(error)
+  })
+
+  it('should fetch repository with fetchRepo.pending action', () => {
+    const action = { type: fetchRepo.pending.type }
+    const nextState = reducer(initialState, action)
+
+    expect(nextState.loading).toBe(true)
+  })
+
+  it('should fetch repository with fetchRepo.fulfilled action', () => {
+    const repoStars = 99
+    const action = { type: fetchRepo.fulfilled.type, payload: repoStars }
+    const nextState = reducer(initialState, action)
+
+    expect(nextState.repoStars).toBe(repoStars)
+    expect(nextState.errorMessage).toBe('')
+  })
+
+  it('should fetch repository with fetchRepo.rejected action', () => {
+    const action = { type: fetchRepo.rejected.type, payload: error }
     const nextState = reducer(initialState, action)
 
     expect(nextState.loading).toBe(false)

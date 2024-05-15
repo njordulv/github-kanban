@@ -23,7 +23,7 @@ This project implements a Kanban board for viewing GitHub repository issues. It 
 - UI design system: Chakra UI
 - Languages: TypeScript
 - Libraries: React Beautiful DnD
-- Testing: React Testing Library
+- Testing: React Testing Library, Jest
 
 ### Installation
 

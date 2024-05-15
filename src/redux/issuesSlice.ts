@@ -85,6 +85,9 @@ const issuesSlice = createSlice({
         state.loading = false
         state.errorMessage = action.payload as string
       })
+      .addCase(fetchRepo.pending, (state) => {
+        state.loading = true
+      })
       .addCase(fetchRepo.fulfilled, (state, action) => {
         if (typeof action.payload === 'number') {
           state.repoStars = action.payload
@@ -93,6 +96,7 @@ const issuesSlice = createSlice({
         }
       })
       .addCase(fetchRepo.rejected, (state, action) => {
+        state.loading = false
         state.errorMessage = action.payload as string
       })
   }

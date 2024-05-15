@@ -1,6 +1,6 @@
 {
   "name": "github-kanban",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "private": false,
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
